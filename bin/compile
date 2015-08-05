@@ -140,6 +140,18 @@ cache_build | indent
 
 summarize_build() {
   cd $BUILD_DIR
+  
+  if hash bower 2>/dev/null; then
+    echo "        Installing bower deps"
+    if [ -f bower.json ]; then
+      bower install
+    else
+      echo "No bower.json"
+    fi
+  else
+    echo "        Bower not found :("
+  fi
+  
   (npm ls --depth=0 | tail -n +2 || true) 2>/dev/null
 }
 
